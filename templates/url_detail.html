@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}URL Details{% endblock %}
+
+{% block content %}
+
+  <br/>
+  <div class="card text-center">
+    <div class="card-header"></div>
+    <div class="card-body">
+      <h5 class="card-title">TinyURL for: {{ url.long_url }}</h5>
+      <p class="card-text">Short URL: <a href="">{{ url.short_url }}</a></p>
+    </div>
+    <div class="card-footer text-muted"></div>
+  </div>
+
+{% endblock %}
