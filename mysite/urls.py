@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.urls import path
 
 from tinyapp.views import UserRegistrationView
+from tinyapp.views import UrlListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),  
-    path('register/', UserRegistrationView.as_view(),name='Register')
+    path('register/', UserRegistrationView.as_view(),name='Register'),
+    path('urls/', UrlListView.as_view(), name='UrlList'),
 ]
 
 
