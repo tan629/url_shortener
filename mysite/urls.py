@@ -18,11 +18,15 @@ from django.urls import path
 
 from tinyapp.views import UserRegistrationView
 from tinyapp.views import UrlListView
+from tinyapp.views import UrlCreateView
+from tinyapp.views import UrlDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),  
     path('register/', UserRegistrationView.as_view(),name='Register'),
     path('urls/', UrlListView.as_view(), name='UrlList'),
+    path('urls/new/', UrlCreateView.as_view(), name='UrlNew'),
+    path('urls/<pk>/', UrlDetailView.as_view(), name='UrlDetail'),
 ]
 
 
