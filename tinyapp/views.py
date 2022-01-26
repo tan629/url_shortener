@@ -1,6 +1,6 @@
 from typing import Generic
 from django.shortcuts import render
-from django.views.generic import CreateView,ListView,DetailView,View, DeleteView
+from django.views.generic import CreateView,ListView,DetailView,View, DeleteView, UpdateView
 from .models import Url, User
 from .forms import UrlModelForm, UserRegisterForm
 import string,random
@@ -80,4 +80,10 @@ class UrlDeleteView(DeleteView):
     template_name='delete_view.html'
     success_url=reverse_lazy("url-list") #Redirect to the urls list
     
+# View to update URL
+class UrlUpdateView(UpdateView):
 
+    model = Url
+    fields = ['long_url']
+    template_name = 'url_detail.html' # templete for updating URL
+    success_url=reverse_lazy("url-list")  # Redirect to the urls list on success
