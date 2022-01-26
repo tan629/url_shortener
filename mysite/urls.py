@@ -24,11 +24,11 @@ from tinyapp.views import UrlRedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),  
-    path('register/', UserRegistrationView.as_view(),name='Register'),
-    path('urls/', UrlListView.as_view(), name='UrlList'),
-    path('urls/new/', UrlCreateView.as_view(), name='UrlNew'),
-    path('urls/<pk>/', UrlDetailView.as_view(), name='UrlDetail'),
-    path('u/<short_url>/', UrlRedirectView.as_view(), name='RedirectLongUrl'),
+    path('register/', UserRegistrationView.as_view(),name='register-user'),
+    path('urls/', UrlListView.as_view(), name='url-list'),
+    path('urls/new/', UrlCreateView.as_view(), name='url-new'),
+    path('urls/<pk>/', UrlDetailView.as_view(), name='url-detail'),
+    path('u/<short_url>/', UrlRedirectView.as_view(), name='redirect-long-url'),
 ]
 
 
