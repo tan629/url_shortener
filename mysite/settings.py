@@ -15,6 +15,7 @@ import environ
 
 # Initialise environment variables
 env = environ.Env()
+
 environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -87,7 +88,7 @@ DATABASES = {
 
         'NAME': env('DATABASE_NAME'),
 
-        'USER': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
 
         'PASSWORD': env('DATABASE_PASS'),
 
