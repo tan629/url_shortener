@@ -1,10 +1,11 @@
 from typing import Generic
 from django.shortcuts import render
-from django.views.generic import CreateView,ListView,DetailView,View
+from django.views.generic import CreateView,ListView,DetailView,View, DeleteView
 from .models import Url, User
 from .forms import UrlModelForm, UserRegisterForm
 import string,random
 from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -64,9 +65,19 @@ class UrlDetailView (DetailView):
         return render(request, self.template_name,context)
 
 # View that redirects a short URL to its corresponding long URL
+
 class UrlRedirectView(View):
     
     def get(self, request, short_url): 
                
         url_obj = Url.objects.filter(short_url=short_url) #Get URL object from database table of URL based on given short URL     
         return HttpResponseRedirect(url_obj[0].long_url)
+    
+# View that deletes the specified URL from the URL table
+class UrlDeleteView(DeleteView):
+       
+    model=Url
+    template_name='delete_view.html'
+    success_url=reverse_lazy("url-list") #Redirect to the urls list
+    
+
