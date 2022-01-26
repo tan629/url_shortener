@@ -7,12 +7,15 @@ import string,random
 from django.http import HttpResponseRedirect
 
 # Create your views here.
+
+# View for registration form
 class UserRegistrationView(CreateView):
     
     form_class = UserRegisterForm
     success_url = '/register'
     template_name = 'register.html'
     
+# View for displaying URLs saved in the database
 class UrlListView (ListView):  
       
     model = Url   
@@ -20,6 +23,7 @@ class UrlListView (ListView):
     queryset = model.objects.all()
     template_name = 'urls_index.html'
 
+# View for creating a new short URL
 class UrlCreateView(CreateView):
     
     form_class = UrlModelForm
@@ -40,8 +44,9 @@ class UrlCreateView(CreateView):
         form.instance.user_id = user_id
         form.instance.short_url = self.get_short_url()
 
-        return super().form_valid(form)
+        return super().form_valid(form) #If form fields are valid, it redirects to success_url defined in this class
     
+# View for creating a new short URL
 class UrlDetailView (DetailView):
         
     model = Url
@@ -58,9 +63,10 @@ class UrlDetailView (DetailView):
         
         return render(request, self.template_name,context)
 
+# View that redirects a short URL to its corresponding long URL
 class UrlRedirectView(View):
     
     def get(self, request, short_url): 
                
-        url_obj = Url.objects.filter(short_url=short_url)     
+        url_obj = Url.objects.filter(short_url=short_url) #Get URL object from database table of URL based on given short URL     
         return HttpResponseRedirect(url_obj[0].long_url)

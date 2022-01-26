@@ -28,7 +28,7 @@ urlpatterns = [
     path('urls/', UrlListView.as_view(), name='url-list'),
     path('urls/new/', UrlCreateView.as_view(), name='url-new'),
     path('urls/<pk>/', UrlDetailView.as_view(), name='url-detail'),
-    path('u/<short_url>/', UrlRedirectView.as_view(), name='redirect-long-url'),
+    path('u/<short_url>/', UrlRedirectView.as_view(), name='redirect-short-url'),
 ]
 
 

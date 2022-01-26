@@ -1,3 +1,5 @@
+<!--Template for displaying list of all URLs saved in the database--> 
+
 {% extends "base.html" %}
 
 {% block title %}My tiny URLs{% endblock %}
@@ -18,7 +20,7 @@
         {% for url in urls %}
             <tr>
             <td>{{ url.long_url }}</td>
-            <td><a href="{% url 'redirect-long-url' url.short_url %}">{{ url.short_url }}</a></td>
+            <td><a href="{% url 'redirect-short-url' url.short_url %}">{{ url.short_url }}</a></td>
             </tr>
         {% endfor %}
         </tbody>
