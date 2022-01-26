@@ -8,18 +8,20 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.
 class UserRegistrationView(CreateView):
+    
     form_class = UserRegisterForm
     success_url = '/register'
     template_name = 'register.html'
     
-class UrlListView (ListView):    
-    model = Url
-    context_object_name = 'urls'   
-    queryset = [{'short_url': 'b2xVn2', 
-                 'long_url': 'https://www.google.com'}] 
+class UrlListView (ListView):  
+      
+    model = Url   
+    context_object_name = 'urls'  
+    queryset = model.objects.all()
     template_name = 'urls_index.html'
 
 class UrlCreateView(CreateView):
+    
     form_class = UrlModelForm
     success_url = '/urls'
     template_name = 'urls_new.html'
@@ -40,7 +42,8 @@ class UrlCreateView(CreateView):
 
         return super().form_valid(form)
     
-class UrlDetailView (DetailView):    
+class UrlDetailView (DetailView):
+        
     model = Url
     context_object_name = 'url'   
     template_name = 'url_detail.html'
@@ -57,8 +60,7 @@ class UrlDetailView (DetailView):
 
 class UrlRedirectView(View):
     
-    def get(self, request, short_url):
-
-        url_obj = Url.objects.filter(short_url=short_url)
-        
+    def get(self, request, short_url): 
+               
+        url_obj = Url.objects.filter(short_url=short_url)     
         return HttpResponseRedirect(url_obj[0].long_url)

@@ -18,7 +18,7 @@
         {% for url in urls %}
             <tr>
             <td>{{ url.long_url }}</td>
-            <td>{{ url.short_url }}</td>
+            <td><a href="{% url 'redirect-long-url' url.short_url %}">{{ url.short_url }}</a></td>
             </tr>
         {% endfor %}
         </tbody>
