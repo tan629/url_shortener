@@ -20,6 +20,7 @@ from tinyapp.views import UserRegistrationView
 from tinyapp.views import UrlListView
 from tinyapp.views import UrlCreateView
 from tinyapp.views import UrlDetailView
+from tinyapp.views import UrlRedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),  
@@ -27,6 +28,7 @@ urlpatterns = [
     path('urls/', UrlListView.as_view(), name='UrlList'),
     path('urls/new/', UrlCreateView.as_view(), name='UrlNew'),
     path('urls/<pk>/', UrlDetailView.as_view(), name='UrlDetail'),
+    path('u/<short_url>/', UrlRedirectView.as_view(), name='RedirectLongUrl'),
 ]
 
 

@@ -1,9 +1,10 @@
 from typing import Generic
 from django.shortcuts import render
-from django.views.generic import CreateView,ListView,DetailView
+from django.views.generic import CreateView,ListView,DetailView,View
 from .models import Url, User
 from .forms import UrlModelForm, UserRegisterForm
 import string,random
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 class UserRegistrationView(CreateView):
@@ -53,3 +54,11 @@ class UrlDetailView (DetailView):
         }
         
         return render(request, self.template_name,context)
+
+class UrlRedirectView(View):
+    
+    def get(self, request, short_url):
+
+        url_obj = Url.objects.filter(short_url=short_url)
+        
+        return HttpResponseRedirect(url_obj[0].long_url)
