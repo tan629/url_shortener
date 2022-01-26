@@ -19,7 +19,6 @@ from django.urls import path
 from tinyapp.views import UserRegistrationView
 from tinyapp.views import UrlListView
 from tinyapp.views import UrlCreateView
-from tinyapp.views import UrlDetailView
 from tinyapp.views import UrlRedirectView
 from tinyapp.views import UrlDeleteView
 from tinyapp.views import UrlUpdateView
@@ -29,10 +28,9 @@ urlpatterns = [
     path('register/', UserRegistrationView.as_view(),name='register-user'),
     path('urls/', UrlListView.as_view(), name='url-list'),
     path('urls/new/', UrlCreateView.as_view(), name='url-new'),
-    path('urls/<pk>/', UrlDetailView.as_view(), name='url-detail'),
+    path('urls/<pk>/', UrlUpdateView.as_view(), name='url-detail'),
     path('u/<short_url>/', UrlRedirectView.as_view(), name='redirect-short-url'),
     path('urls/delete/<pk>/', UrlDeleteView.as_view(), name='url-delete'),
-    path('urls/update/<pk>/', UrlUpdateView.as_view(), name='url-update'),
 ]
 
 

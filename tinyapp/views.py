@@ -1,6 +1,6 @@
 from typing import Generic
 from django.shortcuts import render
-from django.views.generic import CreateView,ListView,DetailView,View, DeleteView, UpdateView
+from django.views.generic import CreateView,ListView,View, DeleteView, UpdateView
 from .models import Url, User
 from .forms import UrlModelForm, UserRegisterForm
 import string,random
@@ -47,25 +47,8 @@ class UrlCreateView(CreateView):
 
         return super().form_valid(form) #If form fields are valid, it redirects to success_url defined in this class
     
-# View for creating a new short URL
-class UrlDetailView (DetailView):
-        
-    model = Url
-    context_object_name = 'url'   
-    template_name = 'url_detail.html'
     
-    def get(self,request,pk):
-        
-        url = Url.objects.filter(id=pk).first()
-        
-        context={
-            self.context_object_name :url
-        }
-        
-        return render(request, self.template_name,context)
-
 # View that redirects a short URL to its corresponding long URL
-
 class UrlRedirectView(View):
     
     def get(self, request, short_url): 
