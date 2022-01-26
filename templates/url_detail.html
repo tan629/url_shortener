@@ -12,7 +12,12 @@
       <h5 class="card-title">TinyURL for: {{ url.long_url }}</h5>
       <p class="card-text">Short URL: <a href="">{{ url.short_url }}</a></p>
     </div>
-    <div class="card-footer text-muted"></div>
+    <div class="card-footer text-muted">
+      <form method="post">
+        {% csrf_token %} {{ form.as_p }}  
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
   </div>
 
 {% endblock %}
