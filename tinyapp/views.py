@@ -98,9 +98,5 @@ class UserLoginView(LoginView):
     def form_valid(self, form):
         self.request.session['username'] = form.cleaned_data['username']
         return super().form_valid(form)
-    
-# View for user login
-class UserLogoutView(LogoutView):
-    
-    pass
+
     
