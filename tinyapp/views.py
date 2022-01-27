@@ -1,6 +1,7 @@
 from typing import Generic
 from django.shortcuts import render
 from django.views.generic import CreateView,ListView,View, DeleteView, UpdateView
+from django.contrib.auth.views import LoginView
 from .models import Url, User
 from .forms import UrlModelForm, UserRegisterForm
 import string,random
@@ -68,5 +69,11 @@ class UrlUpdateView(UpdateView):
 
     model = Url
     fields = ['long_url']
-    template_name = 'url_detail.html' # templete for updating URL
+    template_name = 'url_detail.html' # template for updating URL
+    success_url=reverse_lazy("url-list")  # Redirect to the urls list on success
+
+# View for user login
+class UserLoginView(LoginView):
+    
+    model=User
     success_url=reverse_lazy("url-list")  # Redirect to the urls list on success
