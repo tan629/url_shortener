@@ -16,3 +16,11 @@ class UrlModelForm(ModelForm):
         widgets = {
             'long_url': TextInput(attrs={'placeholder': 'http://'})
         }
+        
+# Create a user login form
+
+class UserLoginForm(ModelForm):
+    
+     class Meta:
+        model = User
+        fields = ['username','password']
