@@ -17,6 +17,10 @@ class UserRegistrationView(CreateView):
     success_url = '/register'
     template_name = 'register.html'
     
+    def form_valid(self, form):
+        self.request.session['username'] = form.cleaned_data['username']
+        return super().form_valid(form)
+    
 # View for displaying URLs saved in the database
 class UrlListView (ListView):  
       
