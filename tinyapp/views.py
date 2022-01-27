@@ -38,18 +38,14 @@ class UrlCreateView(CreateView):
     success_url = '/urls'
     template_name = 'urls_new.html'
     
-    def post(self, request):
-        form = self.form_class(request.POST) 
-        return self.form_valid(form)
-        
     def get_short_url(self):
         letters = string.ascii_lowercase + string.digits + string.ascii_uppercase
         return ''.join(random.choice(letters) for i in range(6))
 
     def form_valid(self, form):
-        user_id = User.objects.filter(username="tamin").values_list('id',flat=True)
+        user = User.objects.get(username="tamin")
         
-        form.instance.user_id = user_id
+        form.instance.user = user
         form.instance.short_url = self.get_short_url()
 
         return super().form_valid(form) #If form fields are valid, it redirects to success_url defined in this class
@@ -73,7 +69,6 @@ class UrlRedirectView(View):
 class UrlDeleteView(DeleteView):
        
     model=Url
-    template_name='delete_view.html'
     success_url=reverse_lazy("url-list") #Redirect to the urls list
     
 # View to update URL
