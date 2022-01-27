@@ -23,6 +23,7 @@ from tinyapp.views import UrlRedirectView
 from tinyapp.views import UrlDeleteView
 from tinyapp.views import UrlUpdateView
 from tinyapp.views import UserLoginView
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),  
@@ -33,6 +34,7 @@ urlpatterns = [
     path('u/<short_url>/', UrlRedirectView.as_view(), name='redirect-short-url'),
     path('urls/delete/<pk>/', UrlDeleteView.as_view(), name='url-delete'),
     path('login/', UserLoginView.as_view(), name='user-login'),
+    path('logout/', LogoutView.as_view(), name='user-logout'),
 ]
 
 

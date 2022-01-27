@@ -1,7 +1,7 @@
 from typing import Generic
 from django.shortcuts import render
 from django.views.generic import CreateView,ListView,View, DeleteView, UpdateView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView,LogoutView
 from .models import Url, User
 from .forms import UrlModelForm, UserRegisterForm
 import string,random
@@ -93,9 +93,14 @@ class UrlUpdateView(UpdateView):
 # View for user login
 class UserLoginView(LoginView):
     
-    model=User
     success_url=reverse_lazy("url-list")  # Redirect to the urls list on success
     
     def form_valid(self, form):
         self.request.session['username'] = form.cleaned_data['username']
         return super().form_valid(form)
+    
+# View for user login
+class UserLogoutView(LogoutView):
+    
+    pass
+    
