@@ -14,7 +14,7 @@ class UrlModelForm(ModelForm):
         model = Url
         fields = ['long_url']
         widgets = {
-            'long_url': TextInput(attrs={'placeholder': 'http://'})
+            'long_url': TextInput(attrs={'placeholder': 'http://', 'class': 'form-control'})
         }
         
 # Create a user login form
