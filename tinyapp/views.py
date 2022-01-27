@@ -21,9 +21,15 @@ class UserRegistrationView(CreateView):
 class UrlListView (ListView):  
       
     model = Url   
-    context_object_name = 'urls'  
+    context_object_name = 'urls'
     queryset = model.objects.all()
     template_name = 'urls_index.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.request.session.get('username')
+        
+        return context
 
 # View for creating a new short URL
 class UrlCreateView(CreateView):
@@ -47,6 +53,12 @@ class UrlCreateView(CreateView):
         form.instance.short_url = self.get_short_url()
 
         return super().form_valid(form) #If form fields are valid, it redirects to success_url defined in this class
+      
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.request.session.get('username') # Set cookie in the context object
+        
+        return context
     
     
 # View that redirects a short URL to its corresponding long URL
@@ -71,9 +83,19 @@ class UrlUpdateView(UpdateView):
     fields = ['long_url']
     template_name = 'url_detail.html' # template for updating URL
     success_url=reverse_lazy("url-list")  # Redirect to the urls list on success
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.request.session.get('username') # Set cookie in the context object
+        
+        return context
 
 # View for user login
 class UserLoginView(LoginView):
     
     model=User
     success_url=reverse_lazy("url-list")  # Redirect to the urls list on success
+    
+    def form_valid(self, form):
+        self.request.session['username'] = form.cleaned_data['username']
+        return super().form_valid(form)
