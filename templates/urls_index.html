@@ -24,12 +24,12 @@
             <td>{{ url.long_url }}</td>
             <td><a href="{% url 'redirect-short-url' url.short_url %}">{{ url.short_url }}</a></td>
             <td>
-              <form method="GET" action="/urls">{% csrf_token %}
+              <form method="GET" action="/urls/{{url.id}}">{% csrf_token %}
                   <button class="btn btn-primary" type="submit">Edit</button>
               </form>
             </td>
             <td>
-              <form method="POST" action="/urls">{% csrf_token %}
+              <form method="GET" action="/urls/delete/{{url.id}}">{% csrf_token %}
                   <button class="btn btn-danger" type="submit">Delete</button>
               </form>
             </td>
