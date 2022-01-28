@@ -37,7 +37,7 @@
             </div>
             {% if username %}
               <div class="navbar-brand">Welcome {{username}}!</div>
-              <form method="get" action="/login/">{% csrf_token %}
+              <form method="get" action="/logout/">{% csrf_token %}
                 <div><button class="btn btn-primary" type="submit">Log out</button></div>
               </form>
             {%else%}
