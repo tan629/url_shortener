@@ -8,35 +8,39 @@
 
   <br/>
   <main class="container">
-    <h3>My URLs</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Long URL</th>
-            <th scope="col">Short URL</th>   
-            <th scope="col">Edit</th>   
-            <th scope="col">Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for url in urls %}
-            <tr>
-            <td>{{ url.long_url }}</td>
-            <td><a href="{% url 'redirect-short-url' url.short_url %}">{{ url.short_url }}</a></td>
-            <td>
-              <form method="GET" action="/urls/{{url.id}}/">{% csrf_token %}
-                  <button class="btn btn-primary" type="submit">Edit</button>
-              </form>
-            </td>
-            <td>
-              <form method="POST" action="/urls/delete/{{url.id}}/">{% csrf_token %}
-                  <button class="btn btn-danger" type="submit">Delete</button>
-              </form>
-            </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if user.is_authenticated %}
+      <h3>My URLs</h3>
+      <table class="table">
+          <thead>
+          <tr>
+              <th scope="col">Long URL</th>
+              <th scope="col">Short URL</th>   
+              <th scope="col">Edit</th>   
+              <th scope="col">Delete</th>
+          </tr>
+          </thead>
+          <tbody>    
+            {% for url in urls %}
+                <tr>
+                  <td>{{ url.long_url }}</td>
+                  <td><a href="{% url 'redirect-short-url' url.short_url %}">{{ url.short_url }}</a></td>
+                  <td>
+                    <form method="GET" action="/urls/{{url.id}}/">{% csrf_token %}
+                        <button class="btn btn-primary" type="submit">Edit</button>
+                    </form>
+                  </td>
+                  <td>
+                    <form method="POST" action="/urls/delete/{{url.id}}/">{% csrf_token %}
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+            {% endfor %}     
+          </tbody>
+      </table>
+    {%else%}
+      <h1>You are not signed in! Please <a href="{% url 'user-login' %}">Login</a> or <a href="{% url 'register-user' %}">Register</a></h1>
+    {% endif %}
   </main>
 
 {% endblock %}

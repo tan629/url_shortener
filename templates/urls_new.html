@@ -6,11 +6,15 @@
 {% block content %}
 
   <br/>
-  <h1>Create Tiny URL</h1>
 
-  <form method="post">
-    {% csrf_token %} {{ form.as_p }}  
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  {% if user.is_authenticated %}
+    <h1>Create Tiny URL</h1>
 
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}  
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  {%else%}
+      <h1>You are not signed in! Please <a href="{% url 'user-login' %}">Login</a> or <a href="{% url 'register-user' %}">Register</a></h1>
+  {% endif %}
 {% endblock %}
