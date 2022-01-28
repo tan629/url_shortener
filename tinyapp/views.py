@@ -26,7 +26,7 @@ class UrlListView (ListView):
       
     model = Url   
     context_object_name = 'urls'
-    queryset = model.objects.all()
+
     template_name = 'urls_index.html'
     
     def get_context_data(self, **kwargs):
@@ -34,12 +34,21 @@ class UrlListView (ListView):
         context['username'] = self.request.session.get('username')
         
         return context
+    
+    def get_queryset(self):
+        
+        current_user_id = self.request.user.id
+        
+        if current_user_id == None:
+            return None
+        
+        return Url.objects.filter(user_id=current_user_id) 
 
 # View for creating a new short URL
 class UrlCreateView(CreateView):
     
     form_class = UrlModelForm
-    success_url = '/urls'
+    success_url = '/login'
     template_name = 'urls_new.html'
     
     def get_short_url(self):
@@ -47,8 +56,9 @@ class UrlCreateView(CreateView):
         return ''.join(random.choice(letters) for i in range(6))
 
     def form_valid(self, form):
-        user = User.objects.get(username="tamin")
         
+        current_user_id = self.request.user.id
+        user = User.objects.filter(pk = current_user_id).first()
         form.instance.user = user
         form.instance.short_url = self.get_short_url()
 
