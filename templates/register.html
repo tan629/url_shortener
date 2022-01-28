@@ -6,12 +6,16 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
-  <h1>Register a User</h1>
-
-  <form method="post">
-    {% csrf_token %} {{ form | crispy }}
-    <button type="submit" class="btn btn-primary">Register</button>
-  </form>
-
+</br>
+<div class="container">
+  <div class="card w-50 mx-auto">
+    <h1 class="card-header">Sign up for TinyApp</h1>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %} {{ form | crispy }}
+        <button type="submit" class="btn btn-success">Sign Up</button>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
