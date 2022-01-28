@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from tinyapp.views import UserRegistrationView
 from tinyapp.views import UrlListView
@@ -23,7 +23,7 @@ from tinyapp.views import UrlRedirectView
 from tinyapp.views import UrlDeleteView
 from tinyapp.views import UrlUpdateView
 from tinyapp.views import UserLoginView
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import LogoutView, PasswordChangeView
 
 urlpatterns = [
     path('', UserLoginView.as_view(), name='user-login'),
@@ -36,6 +36,8 @@ urlpatterns = [
     path('urls/delete/<pk>/', UrlDeleteView.as_view(), name='url-delete'),
     path('login/', UserLoginView.as_view(), name='user-login'),
     path('logout/', LogoutView.as_view(), name='user-logout'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('change-password/', PasswordChangeView.as_view()),
 ]
 
 
