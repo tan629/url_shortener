@@ -26,7 +26,7 @@ from tinyapp.views import UserLoginView
 from django.contrib.auth.views import LogoutView, PasswordChangeView
 
 urlpatterns = [
-    path('', UserLoginView.as_view(), name='user-login'),
+    path('', UrlListView.as_view(), name='user-list'),
     path('admin/', admin.site.urls),  
     path('register/', UserRegistrationView.as_view(),name='register-user'),
     path('urls/', UrlListView.as_view(), name='url-list'),
