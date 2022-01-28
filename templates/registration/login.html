@@ -13,10 +13,11 @@
       <h1 class="card-header">Log into TinyApp</h1>
       <div class="card-body">
         <form method="post">
-          {% csrf_token %} {{ form | crispy }}
-          <br/>
-          <button type="submit" class="btn btn-primary">Login</button>
+          {% csrf_token %} {{ form | crispy }}        
+          <button type="submit" class="mt-2 btn btn-primary">Login</button>     
         </form>
+        <br/>
+        <a href="{% url 'register-user' %}">Not registered? Sign up now!</a>
       </div>
   </div>
 </div>
