@@ -1,28 +1,11 @@
-from http.client import FORBIDDEN
-from tkinter import FLAT
-from typing import Generic
 from django.shortcuts import render
 from django.views.generic import CreateView,ListView,View, DeleteView, UpdateView
-from django.contrib.auth.views import LoginView,LogoutView
-from .models import Url, User
-from .forms import UrlModelForm, UserRegisterForm
+from ..models import Url, User
+from ..forms import UrlModelForm
 import string,random
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse_lazy
 
-# Create your views here.
-
-# View for registration form
-class UserRegistrationView(CreateView):
-    
-    form_class = UserRegisterForm
-    success_url = '/login'
-    template_name = 'register.html'
-    
-    def form_valid(self, form):
-        self.request.session['username'] = form.cleaned_data['username']
-        return super().form_valid(form)
-    
 # View for displaying URLs saved in the database
 class UrlListView (ListView):  
       
@@ -81,6 +64,7 @@ class UrlRedirectView(View):
         url_obj = Url.objects.filter(short_url=short_url) #Get URL object from database table of URL based on given short URL     
         return HttpResponseRedirect(url_obj[0].long_url)
     
+
 # View that deletes the specified URL from the URL table
 class UrlDeleteView(DeleteView):
        
@@ -112,14 +96,3 @@ class UrlUpdateView(UpdateView):
             return HttpResponseForbidden()
         
         return super().get(request, *args, **kwargs)
-
-# View for user login
-class UserLoginView(LoginView):
-    
-    success_url=reverse_lazy("url-list")  # Redirect to the urls list on success
-    
-    def form_valid(self, form):
-        self.request.session['username'] = form.cleaned_data['username']
-        return super().form_valid(form)
-
-    
