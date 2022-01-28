@@ -6,6 +6,7 @@
     {% load bootstrap5 %} 
     {# Load CSS and JavaScript #}
     {% bootstrap_css %} {% bootstrap_javascript %}
+
     <title>{% block title %} {% endblock %}</title>
   </head>
 
@@ -40,7 +41,9 @@
                 <div><button class="btn btn-primary" type="submit">Log out</button></div>
               </form>
             {%else%}
-              <div><button class="btn btn-primary" type="submit">Login</button></div>
+              <form method="get" action="/register/">{% csrf_token %}
+                <div><button class="btn btn-primary" type="submit">Sign up</button></div>
+              </form>
             {% endif %}
         </div>
       </nav>
