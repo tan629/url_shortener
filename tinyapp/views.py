@@ -91,7 +91,7 @@ class UrlDeleteView(DeleteView):
 class UrlUpdateView(UpdateView):
 
     model = Url
-    fields = ['long_url']
+    form_class = UrlModelForm
     template_name = 'url_detail.html' # template for updating URL
     success_url=reverse_lazy("url-list")  # Redirect to the urls list on success
     
