@@ -14,7 +14,7 @@ from django.urls import reverse_lazy
 class UserRegistrationView(CreateView):
     
     form_class = UserRegisterForm
-    success_url = '/register'
+    success_url = '/login'
     template_name = 'register.html'
     
     def form_valid(self, form):
@@ -48,7 +48,7 @@ class UrlListView (ListView):
 class UrlCreateView(CreateView):
     
     form_class = UrlModelForm
-    success_url = '/login'
+    success_url = '/urls'
     template_name = 'urls_new.html'
     
     def get_short_url(self):
