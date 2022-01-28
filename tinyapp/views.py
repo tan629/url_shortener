@@ -106,9 +106,9 @@ class UrlUpdateView(UpdateView):
         
         logged_in_user = self.request.session.get('username')
         
-        logged_in_user_id = User.objects.filter(username=logged_in_user)
+        logged_in_user_id = User.objects.filter(username=logged_in_user)[0].id
         
-        if(self.object.user_id != logged_in_user_id[0].id):
+        if(self.object.user_id != logged_in_user_id):
             return HttpResponseForbidden()
         
         return super().get(request, *args, **kwargs)
