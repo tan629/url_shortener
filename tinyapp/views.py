@@ -1,3 +1,5 @@
+from http.client import FORBIDDEN
+from tkinter import FLAT
 from typing import Generic
 from django.shortcuts import render
 from django.views.generic import CreateView,ListView,View, DeleteView, UpdateView
@@ -5,7 +7,7 @@ from django.contrib.auth.views import LoginView,LogoutView
 from .models import Url, User
 from .forms import UrlModelForm, UserRegisterForm
 import string,random
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse_lazy
 
 # Create your views here.
@@ -98,6 +100,18 @@ class UrlUpdateView(UpdateView):
         context['username'] = self.request.session.get('username') # Set cookie in the context object
         
         return context
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        
+        logged_in_user = self.request.session.get('username')
+        
+        logged_in_user_id = User.objects.filter(username=logged_in_user)
+        
+        if(self.object.user_id != logged_in_user_id[0].id):
+            return HttpResponseForbidden()
+        
+        return super().get(request, *args, **kwargs)
 
 # View for user login
 class UserLoginView(LoginView):
