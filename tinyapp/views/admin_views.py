@@ -18,8 +18,8 @@ class SeeAdminsView(ListView):
     def get_queryset(self):
         
         current_user_id = self.request.user.id
-        print("PERM = ",self.request.user.has_perm('tinyapp.view_user'))
+        
         if current_user_id == None or self.request.user.has_perm('tinyapp.view_user') == False:
             return None
         
-        return User.objects.filter() 
+        return User.objects.all() 
