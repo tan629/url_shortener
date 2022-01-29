@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # View for displaying URLs saved in the database
 class UrlListView (LoginRequiredMixin,ListView):  
     
-    login_url = '/login/'
+    login_url = '/login'
     
     model = Url   
     context_object_name = 'urls'
@@ -67,9 +67,8 @@ class UrlCreateView(LoginRequiredMixin,CreateView):
 # View that redirects a short URL to its corresponding long URL
 class UrlRedirectView(View):
     
-    def get(self, short_url): 
-               
-        url_obj = Url.objects.filter(short_url=short_url) #Get URL object from database table of URL based on given short URL     
+    def get(self, request, short_url):       
+        url_obj = Url.objects.filter(short_url=short_url) #Get URL object from database table of URL based on given short URL   
         return HttpResponseRedirect(url_obj[0].long_url)
     
 
