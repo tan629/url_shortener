@@ -1,10 +1,12 @@
 from enum import auto
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 
 # Definition of User model
 class User(AbstractUser):
-    pass
+    def __str__(self):
+        return self.first_name + " " + self.last_name
 
 # Definition of URL model
 class Url(models.Model):
@@ -12,4 +14,10 @@ class Url(models.Model):
     long_url = models.URLField(verbose_name='Long URL',max_length=500)
     user = models.ForeignKey('User',on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.short_url
+
+    def get_absolute_url(self):
+       return reverse('url-detail', args=[str(self.pk)])
     
