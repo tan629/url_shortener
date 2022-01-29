@@ -2,18 +2,26 @@
 
 {% extends "base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}Create Tiny URL{% endblock %} 
 {% block content %}
 
   <br/>
 
   {% if user.is_authenticated %}
-    <h1>Create Tiny URL</h1>
 
-    <form method="post">
-      {% csrf_token %} {{ form.as_p }}  
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+  <div class="card">
+    <div class="card-header">        
+      <h1>Create Tiny URL</h1>
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %} {{ form | crispy }}  
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+      </form>
+    </div>
+  </div>
   {%else%}
       <h1>You are not signed in! Please <a href="{% url 'user-login' %}">Login</a> or <a href="{% url 'register-user' %}">Register</a></h1>
   {% endif %}
