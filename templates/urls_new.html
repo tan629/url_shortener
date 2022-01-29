@@ -6,11 +6,7 @@
 
 {% block title %}Create Tiny URL{% endblock %} 
 {% block content %}
-
   <br/>
-
-  {% if user.is_authenticated %}
-
   <div class="card">
     <div class="card-header">        
       <h1>Create Tiny URL</h1>
@@ -22,7 +18,4 @@
       </form>
     </div>
   </div>
-  {%else%}
-      <h1>You are not signed in! Please <a href="{% url 'user-login' %}">Login</a> or <a href="{% url 'register-user' %}">Register</a></h1>
-  {% endif %}
 {% endblock %}
