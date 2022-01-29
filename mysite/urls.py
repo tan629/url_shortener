@@ -23,6 +23,7 @@ from tinyapp.views import UrlRedirectView
 from tinyapp.views import UrlDeleteView
 from tinyapp.views import UrlUpdateView
 from tinyapp.views import UserLoginView
+from tinyapp.views import SeeAdminsView
 from django.contrib.auth.views import LogoutView, PasswordChangeView
 
 urlpatterns = [
@@ -38,6 +39,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='user-logout'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('change-password/', PasswordChangeView.as_view()),
+    path('userlist/', SeeAdminsView.as_view(), name='users-list'),
 ]
 
 
