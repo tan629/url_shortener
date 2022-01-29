@@ -5,10 +5,13 @@ from ..forms import UrlModelForm
 import string,random
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # View for displaying URLs saved in the database
-class UrlListView (ListView):  
-      
+class UrlListView (LoginRequiredMixin,ListView):  
+    
+    login_url = '/login/'
+    
     model = Url   
     context_object_name = 'urls'
 
@@ -18,7 +21,7 @@ class UrlListView (ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['username'] = self.request.session.get('username')
-        
+
         return context
     
     def get_queryset(self):
@@ -31,8 +34,9 @@ class UrlListView (ListView):
         return Url.objects.filter(user_id=current_user_id) 
 
 # View for creating a new short URL
-class UrlCreateView(CreateView):
+class UrlCreateView(LoginRequiredMixin,CreateView):
     
+    login_url = '/login/'
     form_class = UrlModelForm
     success_url = '/urls'
     template_name = 'urls_new.html'
@@ -63,7 +67,7 @@ class UrlCreateView(CreateView):
 # View that redirects a short URL to its corresponding long URL
 class UrlRedirectView(View):
     
-    def get(self, request, short_url): 
+    def get(self, short_url): 
                
         url_obj = Url.objects.filter(short_url=short_url) #Get URL object from database table of URL based on given short URL     
         return HttpResponseRedirect(url_obj[0].long_url)
@@ -91,6 +95,7 @@ class UrlUpdateView(UpdateView):
         return context
 
     def get(self, request, *args, **kwargs):
+        
         self.object = self.get_object()
         
         logged_in_user = self.request.session.get('username')
