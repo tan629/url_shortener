@@ -1,22 +1,26 @@
 <!--Template to display details of a long URL and its corresponding short URL--> 
 {% extends "base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}URL Details{% endblock %}
 
 {% block content %}
 
   <br/>
   {% if user.is_authenticated %}
-    <div class="card text-center">
-      <div class="card-header"></div>
+    <div class="card">
+      <div class="card-header text-center"><h4>Edit URL Details</h4></div>
       <div class="card-body">
-        <h5 class="card-title">TinyURL for: {{ url.long_url }}</h5>
-        <p class="card-text">Short URL: <a href="{% url 'redirect-short-url' url.short_url %}">{{ url.short_url }}</a></p>
+        <div class="text-center">
+          <h5 class="card-title">TinyURL for: {{ url.long_url }}</h5>
+          <p class="card-text">Short URL: <a href="{% url 'redirect-short-url' url.short_url %}">{{ url.short_url }}</a></p>
+        </div>
       </div>
       <div class="card-footer text-muted">
         <form method="post">
-          {% csrf_token %} {{ form.as_p }}  
-          <button type="submit" class="btn btn-success">Update</button>
+          {% csrf_token %} {{ form | crispy }} 
+          <button type="submit" class="btn btn-success mt-2">Update</button>
         </form>
       </div>
     </div>
