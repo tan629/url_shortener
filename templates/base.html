@@ -27,7 +27,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav">
-                  {% if username %}
+                  {% if user.is_authenticated %}
                     {% with request.resolver_match.url_name as url_name %}
                       <li class="nav-item">
                         <a class="nav-link {% if url_name == 'url-list' %}active{% endif %}" href="{% url 'url-list' %}">My URLs</a>
@@ -35,6 +35,11 @@
                       <li class="nav-item">
                         <a class="nav-link {% if url_name == 'url-new' %}active{% endif %}" href="{% url 'url-new' %}">Create New URL</a>
                       </li>
+                      {% if perms.tinyapp.view_user %}
+                        <li class="nav-item">
+                          <a class="nav-link {% if url_name == 'users-list' %}active{% endif %}" href="{% url 'users-list' %}">Users List</a>
+                        </li>
+                      {% endif %}
                     {% endwith %}
                   {% else %}
                     {% with request.resolver_match.url_name as url_name %}
@@ -48,7 +53,7 @@
                   {% endif %}
               </ul>
             </div>
-            {% if username %}
+            {% if user.is_authenticated %}
               <div class="navbar-brand">Welcome {{username}}!</div>
               <form method="get" action="/logout/">{% csrf_token %}
                 <div><button class="btn btn-danger" type="submit">Log out</button></div>
