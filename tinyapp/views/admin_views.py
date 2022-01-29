@@ -1,9 +1,11 @@
 from django.views.generic import ListView
 from ..models import User
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 # View for user login
-class SeeAdminsView(ListView):
+class SeeAdminsView(PermissionRequiredMixin,ListView):
     
+    permission_required = 'tinyapp.view_user'
     template_name = 'admin.html'
     model = User   
     context_object_name = 'users'
