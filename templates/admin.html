@@ -6,8 +6,6 @@
 
   <br/>
   <main class="container">
-    {% if user.is_authenticated%}
-
       {% if users %}
         <h3>TinyApp Users</h3>
         <table class="table">
@@ -33,9 +31,6 @@
       {%else%}
         <h1>You do not have permissions to view this page</h1>
       {% endif %}
-    {%else%}
-        <h1>You are not signed in! Please <a href="{% url 'user-login' %}">Login</a> or <a href="{% url 'register-user' %}">Register</a></h1>
-    {% endif %}
   </main>
 
 {% endblock %}
