@@ -21,35 +21,40 @@ class ViewTest(TestCase):
             short_url='bx2Vu2',
             long_url='https://www.google.com',
             user=self.user,
-            date_created=datetime.datetime.now()
+            date_created=datetime.datetime.now(),
+            slug_field='googoo'
         )
         
         self.url_2 = Url.objects.create(
             short_url='bx2Vr3',
             long_url='https://www.facebook.com',
             user=self.user,
-            date_created=datetime.datetime.now()
+            date_created=datetime.datetime.now(),
+            slug_field='facebook'
         )
         
         self.url_3 = Url.objects.create(
             short_url='bx2Vx4',
             long_url='https://www.amazon.com',
             user=self.user,
-            date_created=datetime.datetime.now()
+            date_created=datetime.datetime.now(),
+            slug_field='amazon'
         )
         
         self.url_4 = Url.objects.create(
             short_url='bx2Vn5',
             long_url='https://www.youtube.com',
             user=self.user,
-            date_created=datetime.datetime.now()
+            date_created=datetime.datetime.now(),
+            slug_field='utube'
         )
         
         self.url_5 = Url.objects.create(
             short_url='bx2Vm6',
             long_url='https://www.bbc.com',
             user=self.user,
-            date_created=datetime.datetime.now()
+            date_created=datetime.datetime.now(),
+            slug_field='bbc'
         )
         
         self.url_1.save()
