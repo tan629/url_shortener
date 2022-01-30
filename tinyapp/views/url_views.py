@@ -67,10 +67,40 @@ class UrlCreateView(LoginRequiredMixin,CreateView):
 # View that redirects a short URL to its corresponding long URL
 class UrlRedirectView(View):
     
-    def get(self, request, short_url):       
-        url_obj = Url.objects.filter(short_url=short_url) #Get URL object from database table of URL based on given short URL   
-        return HttpResponseRedirect(url_obj[0].long_url)
-    
+    def get(self, request, short_url):  
+        
+        self.short_url = short_url
+             
+        url_obj = Url.objects.filter(short_url=short_url) #Get URL object from database table of URL based on given short URL  
+        
+        response = HttpResponseRedirect(url_obj[0].long_url)
+        
+        cookie_id = short_url # Create unique cookie id based on redirected short URL
+        
+        # Calculate total visits to a URL
+        if cookie_id in request.COOKIES.keys():
+            counter =  int(request.COOKIES[cookie_id]) + 1
+            response.set_cookie(cookie_id, counter)   
+        else:
+            response.set_cookie(cookie_id, 1)
+                                  
+        cookie_id = short_url + "unique_visits" #Creating unique cookie id for each short URL visited
+            
+        #Calculate unique visits to a URL
+        if self.request.session.get('username') == None:
+
+            if cookie_id in request.COOKIES.keys():
+                count = int(request.COOKIES[cookie_id]) + 1
+                response.set_cookie(cookie_id, count)
+            else:
+                response.set_cookie(cookie_id, 1)
+        else:
+            if cookie_id in request.COOKIES.keys():
+                response.set_cookie(cookie_id, request.COOKIES[cookie_id])
+            else:
+                response.set_cookie(cookie_id, 1)
+            
+        return response
 
 # View that deletes the specified URL from the URL table
 class UrlDeleteView(DeleteView):
@@ -85,11 +115,24 @@ class UrlUpdateView(UpdateView):
     form_class = UrlModelForm
     template_name = 'url_detail.html' # template for updating URL
     success_url=reverse_lazy("url-list")  # Redirect to the urls list on success
-    
+     
     # Get coookie info from context data
-    def get_context_data(self, **kwargs):
+    def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['username'] = self.request.session.get('username') # Set cookie in the context object
+                 
+        cookie_id = str(context['url']) #Unique cookie value based on redirected short URL
+        
+        #Set the total visits variable to be displayed in the URL detail page
+        if self.request.COOKIES.get(cookie_id) == None:
+            context['total_visits'] = 0 
+        else:
+            context['total_visits'] = self.request.COOKIES.get(cookie_id)
+            
+        if self.request.COOKIES.get(cookie_id + 'unique_visits') == None:
+            context['unique_visits'] = 0 
+        else:
+            context['unique_visits'] = self.request.COOKIES.get(cookie_id + 'unique_visits')
         
         return context
 
@@ -108,5 +151,5 @@ class UrlUpdateView(UpdateView):
         #If not, then deny access to the URL
         if(self.object.user_id != logged_in_user_id):
             return HttpResponseForbidden()
-        
+
         return super().get(request, *args, **kwargs)
