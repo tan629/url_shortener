@@ -10,7 +10,13 @@
   <br/>
   {% if user.is_authenticated %}
     <div class="card">
-      <div class="card-header text-center"><h4>Edit URL Details</h4></div>
+      <div class="card-header">    
+        <div class="row">
+          <div class="col"><h5>Total Visits: {{total_visits}}</h5></div>
+          <div class="col"><h4>Edit URL Details</h4></div>
+          <div class="col"><h5>Unique Visits: {{unique_visits}}</h5></div>
+          </div>
+      </div>  
       <div class="card-body">
         <div class="text-center">
           <h5 class="card-title">TinyURL for: {{ url.long_url }}</h5>
