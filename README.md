@@ -9,8 +9,8 @@ TinyApp is a full stack web application built with Python and Django that allows
 
 ## Final Product
 
-!["screenshot description"](link-to-your-pic-here)
-!["screenshot description"](#)
+!["Home page displaying short URLs"](https://github.com/tan629/url_shortener/blob/main/docs/URLS.png)
+!["Register page"](https://github.com/tan629/url_shortener/blob/main/docs/REGISTER.png)
 
 ## Dependencies
 
