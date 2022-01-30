@@ -6,6 +6,7 @@ import string,random
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.text import slugify
 
 # View for displaying URLs saved in the database
 class UrlListView (LoginRequiredMixin,ListView):  
@@ -53,6 +54,7 @@ class UrlCreateView(LoginRequiredMixin,CreateView):
         user = User.objects.filter(pk = current_user_id).first()
         form.instance.user = user
         form.instance.short_url = self.get_short_url()
+        form.instance.slug_field = slugify(form.instance.long_url)
 
         return super().form_valid(form) #If form fields are valid, it redirects to success_url defined in this class
     
