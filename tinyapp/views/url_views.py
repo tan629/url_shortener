@@ -125,12 +125,13 @@ class UrlUpdateView(UpdateView):
                  
         cookie_id = str(context['url']) #Unique cookie value based on redirected short URL
         
-        #Set the total visits variable to be displayed in the URL detail page
+        #Set the total visits variable to be displayed on the URL detail page
         if self.request.COOKIES.get(cookie_id) == None:
             context['total_visits'] = 0 
         else:
             context['total_visits'] = self.request.COOKIES.get(cookie_id)
-            
+        
+        # Set the number of unique visits to the given short URL for display on the URL detail page
         if self.request.COOKIES.get(cookie_id + 'unique_visits') == None:
             context['unique_visits'] = 0 
         else:
