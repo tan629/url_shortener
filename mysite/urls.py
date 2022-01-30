@@ -32,7 +32,7 @@ urlpatterns = [
     path('register/', UserRegistrationView.as_view(),name='register-user'),
     path('urls/', UrlListView.as_view(), name='url-list'),
     path('urls/new/', UrlCreateView.as_view(), name='url-new'),
-    path('urls/<pk>/', UrlUpdateView.as_view(), name='url-detail'),
+    path('urls/<pk>/<slug>', UrlUpdateView.as_view(), name='url-detail'),
     path('u/<short_url>/', UrlRedirectView.as_view(), name='redirect-short-url'),
     path('urls/delete/<pk>/', UrlDeleteView.as_view(), name='url-delete'),
     path('login/', UserLoginView.as_view(redirect_authenticated_user = True), name='user-login'),

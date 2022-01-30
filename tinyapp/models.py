@@ -20,6 +20,6 @@ class Url(models.Model):
         return self.short_url
 
     def get_absolute_url(self):
-       return reverse('url-detail', args=[str(self.pk)])
+       return reverse('url-detail', kwargs={'pk':self.pk,'slug': self.slug_field})
 
     
