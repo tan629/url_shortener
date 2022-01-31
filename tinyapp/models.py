@@ -14,7 +14,7 @@ class Url(models.Model):
     long_url = models.URLField(verbose_name='Long URL',max_length=500)
     user = models.ForeignKey('User',on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now=True)
-    slug_field = models.SlugField(max_length=100, unique=True)
+    slug_field = models.SlugField(max_length=100)
     
     def __str__(self):
         return self.short_url
