@@ -30,6 +30,22 @@
         </form>
       </div>
     </div>
+    <br/>
+    <div class="text-center"><h2>Visitor data</h2></div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+                <th scope="col" class="text-center">Visitor ID</th>
+                <th scope="col" class="text-center">Time Visited</th> 
+            </tr>
+          </thead>
+          {% for v in visitors %}
+          <tr>
+            <td class="text-center">{{ v.visitor_id }}</td>
+            <td class="text-center">{{ v.time_visited }}</td>
+          </tr>
+          {% endfor %}
+        </table>
   {%else%}
     <h1>You are not signed in! Please <a href="{% url 'user-login' %}">Login</a> or <a href="{% url 'register-user' %}">Register</a></h1>
   {% endif %}

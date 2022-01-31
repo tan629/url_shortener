@@ -22,4 +22,7 @@ class Url(models.Model):
     def get_absolute_url(self):
        return reverse('url-detail', kwargs={'pk':self.pk,'slug': self.slug_field})
 
-    
+class Visitor(models.Model):
+    visitor_id = models.CharField(max_length=20)
+    short_url = models.CharField(max_length=6)
+    time_visited = models.DateTimeField(auto_now=True)
