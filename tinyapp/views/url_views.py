@@ -22,55 +22,55 @@ def set_cookie_total_url_hits(short_url, response, request):
     # Calculate total visits to a URL
     if cookie_id in request.COOKIES.keys():
         counter =  int(request.COOKIES[cookie_id]) + 1
-        response.set_cookie(cookie_id, counter)   
+        response.set_cookie(cookie_id, counter,max_age=6000)   
     else:
-        response.set_cookie(cookie_id, 1)
+        response.set_cookie(cookie_id, 1, max_age=6000)
 
 # This function sets the cookie to track unique number of visits to a given URL           
 def set_cookie_url_unique_visits(short_url, response, request):
     
     short_url_owner_id = Url.objects.filter(short_url=short_url)[0].user_id
     
-    cookie_id = short_url + str(short_url_owner_id) #Creating unique cookie id for each short URL visited by unique visitors
+    cookie_id = short_url + str(short_url_owner_id) #Creating unique cookie id for each short URL visited by unique anonymous visitors
     
     if request.session.get('username') == None:     
         if cookie_id in request.COOKIES.keys():
             count = int(request.COOKIES[cookie_id]) + 1
-            response.set_cookie(cookie_id, count)
+            response.set_cookie(cookie_id, count, max_age=6000)
         else:
-            response.set_cookie(cookie_id, 1)
+            response.set_cookie(cookie_id, 1, max_age=6000)
     else:
  
-        user_cookie_id = short_url + str(short_url_owner_id) + str(request.session.get('username')) #Creating unique cookie id for each short URL visited by unique visitors
+        user_cookie_id = short_url + str(short_url_owner_id) + str(request.session.get('username')) #Creating unique cookie id for each short URL visited by looged in unique visitors
         
         if user_cookie_id not in request.COOKIES.keys():
-            response.set_cookie(user_cookie_id, 1) # cookie for tracking if a user visited a link at least once
+            
+            response.set_cookie(user_cookie_id, 1, max_age=6000) 
+            
             if cookie_id not in request.COOKIES.keys():
-                response.set_cookie(cookie_id, 1) # cookie for actual unique count 
+                response.set_cookie(cookie_id, 1, max_age=6000) 
             else:                     
-                response.set_cookie(cookie_id, int(request.COOKIES[cookie_id]) + 1)
+                response.set_cookie(cookie_id, int(request.COOKIES[cookie_id]) + 1, max_age=6000)
 
 # This function sets the cookie to track visitor data          
 def set_cookie_visitor_data(short_url, response, request):
 
     user_logged_in = request.session.get('username')
         
-    cookie_id = 'Visitor_' + short_url 
+    cookie_id = 'Visitor_' + short_url # Set cookie for anonymous user
     
     if user_logged_in:
-        cookie_id += str(user_logged_in)
+        cookie_id += str(user_logged_in) # Set cookie unqiue to the logged in user
 
     if user_logged_in == None:
         visitor = Visitor(visitor_id=get_visitor_id(), short_url=short_url)
     else:
-        short_url_owner_id = Url.objects.filter(short_url=short_url)[0].user_id
-        curr_user_id = User.objects.filter(username=str(request.session.get('username')))[0].id
-    
-        if cookie_id not in request.COOKIES.keys() or short_url_owner_id != curr_user_id:
+        if cookie_id in request.COOKIES.keys():
+            visitor = Visitor(visitor_id=request.COOKIES[cookie_id], short_url=short_url)
+            
+        else: # Generate a visitor ID for the logged in user only if the user is viewing the short url for first time   
             visitor = Visitor(visitor_id=get_visitor_id(), short_url=short_url)
             response.set_cookie(cookie_id,visitor.visitor_id)
-        else:
-            visitor = Visitor(visitor_id=request.COOKIES[cookie_id], short_url=short_url)
     
     if visitor:
         visitor.save()
@@ -177,9 +177,9 @@ class UrlUpdateView(UpdateView):
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['username'] = self.request.session.get('username') # Set cookie in the context object
-                 
-        cookie_id = str(context['url']) #Unique cookie value based on redirected short URL
-        
+              
+        cookie_id = str(self.get_object()) #Unique cookie value based on redirected short URL
+
         #Set the total visits variable to be displayed on the URL detail page
         if self.request.COOKIES.get(cookie_id) == None:
             context['total_visits'] = 0 
