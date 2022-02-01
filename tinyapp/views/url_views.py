@@ -7,50 +7,13 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.text import slugify
+from django.db.models import Count
 
 def get_visitor_id():
     
     unique_str = ''.join(random.choice(string.digits + string.ascii_uppercase) for i in range(6)) 
     
     return 'Visitor_' + unique_str
-
-# This function sets cookie to track total number of visits to a given URL
-def set_cookie_total_url_hits(short_url, response, request):
-    
-    cookie_id = short_url # Create unique cookie id based on redirected short URL
-        
-    # Calculate total visits to a URL
-    if cookie_id in request.COOKIES.keys():
-        counter =  int(request.COOKIES[cookie_id]) + 1
-        response.set_cookie(cookie_id, counter,max_age=6000)   
-    else:
-        response.set_cookie(cookie_id, 1, max_age=6000)
-
-# This function sets the cookie to track unique number of visits to a given URL           
-def set_cookie_url_unique_visits(short_url, response, request):
-    
-    short_url_owner_id = Url.objects.filter(short_url=short_url)[0].user_id
-    
-    cookie_id = short_url + str(short_url_owner_id) #Creating unique cookie id for each short URL visited by unique anonymous visitors
-    
-    if request.session.get('username') == None:     
-        if cookie_id in request.COOKIES.keys():
-            count = int(request.COOKIES[cookie_id]) + 1
-            response.set_cookie(cookie_id, count, max_age=6000)
-        else:
-            response.set_cookie(cookie_id, 1, max_age=6000)
-    else:
- 
-        user_cookie_id = short_url + str(short_url_owner_id) + str(request.session.get('username')) #Creating unique cookie id for each short URL visited by looged in unique visitors
-        
-        if user_cookie_id not in request.COOKIES.keys():
-            
-            response.set_cookie(user_cookie_id, 1, max_age=6000) 
-            
-            if cookie_id not in request.COOKIES.keys():
-                response.set_cookie(cookie_id, 1, max_age=6000) 
-            else:                     
-                response.set_cookie(cookie_id, int(request.COOKIES[cookie_id]) + 1, max_age=6000)
 
 # This function sets the cookie to track visitor data          
 def set_cookie_visitor_data(short_url, response, request):
@@ -70,7 +33,7 @@ def set_cookie_visitor_data(short_url, response, request):
             
         else: # Generate a visitor ID for the logged in user only if the user is viewing the short url for first time   
             visitor = Visitor(visitor_id=get_visitor_id(), short_url=short_url)
-            response.set_cookie(cookie_id,visitor.visitor_id)
+            response.set_cookie(cookie_id,visitor.visitor_id,max_length=1000000)
     
     if visitor:
         visitor.save()
@@ -145,14 +108,6 @@ class UrlRedirectView(View):
         
         response = HttpResponseRedirect(url_obj[0].long_url)
         
-        #Calculate total visits to a URL
-        
-        set_cookie_total_url_hits(short_url, response, request)
-                                  
-        #Calculate unique visits to a URL
-        
-        set_cookie_url_unique_visits(short_url, response, request)
-                
         #Track visitors 
        
         set_cookie_visitor_data(short_url,response,request)
@@ -184,7 +139,7 @@ class UrlUpdateView(UpdateView):
         if self.request.COOKIES.get(cookie_id) == None:
             context['total_visits'] = 0 
         else:
-            context['total_visits'] = self.request.COOKIES.get(cookie_id)
+            context['total_visits'] = Visitor.objects.all().count
         
         # Set the number of unique visits to the given short URL for display on the URL detail page
         
@@ -193,7 +148,7 @@ class UrlUpdateView(UpdateView):
         if self.request.COOKIES.get(cookie_id + str(short_url_owner_id)) == None:
             context['unique_visits'] = 0 
         else:
-            context['unique_visits'] = self.request.COOKIES.get(cookie_id + str(short_url_owner_id))
+            context['unique_visits'] = Visitor.objects.values('visitor_id').annotate(dcount=Count('visitor_id')).order_by().count()
         
         # Set the visitors data table for display in the url detail page
         context['visitors'] = Visitor.objects.filter(short_url=str(context['url']))
