@@ -32,9 +32,8 @@ def set_cookie_url_unique_visits(short_url, response, request):
     short_url_owner_id = Url.objects.filter(short_url=short_url)[0].user_id
     
     cookie_id = short_url + str(short_url_owner_id) #Creating unique cookie id for each short URL visited by unique visitors
-        
-    if request.session.get('username') == None:
     
+    if request.session.get('username') == None:     
         if cookie_id in request.COOKIES.keys():
             count = int(request.COOKIES[cookie_id]) + 1
             response.set_cookie(cookie_id, count)
@@ -42,24 +41,25 @@ def set_cookie_url_unique_visits(short_url, response, request):
             response.set_cookie(cookie_id, 1)
     else:
  
-        response.set_cookie(cookie_id, 1)   
+        user_cookie_id = short_url + str(short_url_owner_id) + str(request.session.get('username')) #Creating unique cookie id for each short URL visited by unique visitors
         
-        if cookie_id in request.COOKIES.keys():
-                       
-            curr_user_id = User.objects.filter(username=str(request.session.get('username')))[0].id
-          
-            if short_url_owner_id == curr_user_id:       
-                response.set_cookie(cookie_id, request.COOKIES[cookie_id])           
-            else:
+        if user_cookie_id not in request.COOKIES.keys():
+            response.set_cookie(user_cookie_id, 1) # cookie for tracking if a user visited a link at least once
+            if cookie_id not in request.COOKIES.keys():
+                response.set_cookie(cookie_id, 1) # cookie for actual unique count 
+            else:                     
                 response.set_cookie(cookie_id, int(request.COOKIES[cookie_id]) + 1)
 
 # This function sets the cookie to track visitor data          
 def set_cookie_visitor_data(short_url, response, request):
-    
-    cookie_id = 'Visitor_' + short_url
-    
+
     user_logged_in = request.session.get('username')
+        
+    cookie_id = 'Visitor_' + short_url 
     
+    if user_logged_in:
+        cookie_id += str(user_logged_in)
+
     if user_logged_in == None:
         visitor = Visitor(visitor_id=get_visitor_id(), short_url=short_url)
     else:
