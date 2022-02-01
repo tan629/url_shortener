@@ -33,7 +33,7 @@ def set_cookie_visitor_data(short_url, response, request):
             
         else: # Generate a visitor ID for the logged in user only if the user is viewing the short url for first time   
             visitor = Visitor(visitor_id=get_visitor_id(), short_url=short_url)
-            response.set_cookie(cookie_id,visitor.visitor_id,max_length=1000000)
+            response.set_cookie(cookie_id,visitor.visitor_id,max_age=1000000)
     
     if visitor:
         visitor.save()
@@ -132,27 +132,17 @@ class UrlUpdateView(UpdateView):
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['username'] = self.request.session.get('username') # Set cookie in the context object
-              
-        cookie_id = str(self.get_object()) #Unique cookie value based on redirected short URL
-
-        #Set the total visits variable to be displayed on the URL detail page
-        if self.request.COOKIES.get(cookie_id) == None:
-            context['total_visits'] = 0 
-        else:
-            context['total_visits'] = Visitor.objects.all().count
-        
-        # Set the number of unique visits to the given short URL for display on the URL detail page
-        
-        short_url_owner_id = Url.objects.filter(short_url= str(context['url']))[0].user_id
-        
-        if self.request.COOKIES.get(cookie_id + str(short_url_owner_id)) == None:
-            context['unique_visits'] = 0 
-        else:
-            context['unique_visits'] = Visitor.objects.values('visitor_id').annotate(dcount=Count('visitor_id')).order_by().count()
-        
+                        
         # Set the visitors data table for display in the url detail page
         context['visitors'] = Visitor.objects.filter(short_url=str(context['url']))
         
+        #Set the total visits variable to be displayed on the URL detail page
+        context['total_visits'] = Visitor.objects.filter(short_url=str(context['url'])).count()
+        
+        # Set the number of unique visits to the given short URL for display on the URL detail page
+        
+        context['unique_visits'] = Visitor.objects.filter(short_url=str(context['url'])).values('visitor_id').annotate(dcount=Count('visitor_id')).order_by().count()
+  
         return context
 
     def get(self, request, *args, **kwargs):
