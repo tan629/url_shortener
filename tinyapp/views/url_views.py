@@ -132,16 +132,19 @@ class UrlUpdateView(UpdateView):
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['username'] = self.request.session.get('username') # Set cookie in the context object
-                        
+                 
+        # Query visitor data of the given url       
+        query_set = Visitor.objects.filter(short_url=str(context['url']))
+        
         # Set the visitors data table for display in the url detail page
-        context['visitors'] = Visitor.objects.filter(short_url=str(context['url']))
+        context['visitors'] = query_set
         
         #Set the total visits variable to be displayed on the URL detail page
-        context['total_visits'] = Visitor.objects.filter(short_url=str(context['url'])).count()
+        context['total_visits'] = query_set.count()
         
         # Set the number of unique visits to the given short URL for display on the URL detail page
         
-        context['unique_visits'] = Visitor.objects.filter(short_url=str(context['url'])).values('visitor_id').annotate(dcount=Count('visitor_id')).order_by().count()
+        context['unique_visits'] = query_set.values('visitor_id').annotate(dcount=Count('visitor_id')).order_by().count()
   
         return context
 
