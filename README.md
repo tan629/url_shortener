@@ -6,21 +6,9 @@ TinyApp is a full stack web application built with Python and Django that allows
 
 [Link to TinyApp](http://tan629.pythonanywhere.com/)
 
-## Final Product
-
-!["Register page"](https://github.com/tan629/url_shortener/blob/main/docs/REGISTER.png)
-!["Login page"](https://github.com/tan629/url_shortener/blob/main/docs/LOGIN_PAGE.png)
-!["Home page displaying short URLs"](https://github.com/tan629/url_shortener/blob/main/docs/URLS.png)
-!["Edit URL page"](https://github.com/tan629/url_shortener/blob/main/docs/VISITOR_DATA.png)
-!["Create Short URL page"](https://github.com/tan629/url_shortener/blob/main/docs/CREATE_URL.png)
-!["ERD of TinyApp"](https://github.com/tan629/url_shortener/blob/main/docs/tinyapp_users_url.png)
-
-
 ## Dependencies
-
 - crispy-forms
 - add all dependencies here
-
 
 ## Getting Started
 
@@ -38,3 +26,13 @@ TinyApp is a full stack web application built with Python and Django that allows
 - Click on the localhost link in the terminal to go to the application page
 - Run the database migrations using the `python manage.py migrate` command.
 - Create a superuser to access the /admin page
+
+## Final Product
+
+!["Register page"](https://github.com/tan629/url_shortener/blob/main/docs/REGISTER.png)
+!["Login page"](https://github.com/tan629/url_shortener/blob/main/docs/LOGIN_PAGE.png)
+!["Home page displaying short URLs"](https://github.com/tan629/url_shortener/blob/main/docs/URLS.png)
+!["Edit URL page"](https://github.com/tan629/url_shortener/blob/main/docs/VISITOR_DATA.png)
+!["Create Short URL page"](https://github.com/tan629/url_shortener/blob/main/docs/CREATE_URL.png)
+!["ERD of TinyApp"](https://github.com/tan629/url_shortener/blob/main/docs/tinyapp_users_url.png)
+
