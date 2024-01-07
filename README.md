@@ -35,5 +35,6 @@ TinyApp is a full stack web application built with Python and Django that allows
   DATABASE_PASS=
   
 - Run the development web server using the `python manage.py runserver` command.
+- Click on the localhost link in the terminal to go to the application page
 - Run the database migrations using the `python manage.py migrate` command.
 - Create a superuser to access the /admin page
