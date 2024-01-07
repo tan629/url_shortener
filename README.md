@@ -4,7 +4,7 @@ TinyApp is a full stack web application built with Python and Django that allows
 
 # Link to Deployed App
 
-[TinyApp](http://tan629.pythonanywhere.com/)
+[Link to TinyApp](http://tan629.pythonanywhere.com/)
 
 ## Final Product
 
