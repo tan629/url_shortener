@@ -29,10 +29,10 @@ TinyApp is a full stack web application built with Python and Django that allows
 - Install all dependencies -> In the root of the project, execute the command -> `pip install -r requirements.txt`
   
 - Set up a postgres or sqlite database.  If a postgres database is being used, make sure to populate the following secrets in a .env file ->
-  SECRET_KEY=
-  DATABASE_NAME=
-  DATABASE_USER=
-  DATABASE_PASS=
+  SECRET_KEY= <br/>
+  DATABASE_NAME= <br/>
+  DATABASE_USER= <br/>
+  DATABASE_PASS= <br/>
   
 - Run the development web server using the `python manage.py runserver` command.
 - Click on the localhost link in the terminal to go to the application page
