@@ -22,11 +22,12 @@ TinyApp is a full stack web application built with Python and Django that allows
   DATABASE_USER= <br/>
   DATABASE_PASS= <br/>
   
+- Create a superuser to access the /admin page by running the command in the terminal ->
+  `python manage.py createsuperuser` and follow the prompts
 - Run the development web server using the `python manage.py runserver` command.
 - Click on the localhost link in the terminal to go to the application page
 - Run the database migrations using the `python manage.py migrate` command.
-- Create a superuser to access the /admin page
-
+  
 ## Final Product
 
 !["Register page"](https://github.com/tan629/url_shortener/blob/main/docs/REGISTER.png)
