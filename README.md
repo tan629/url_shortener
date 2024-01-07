@@ -24,11 +24,11 @@ TinyApp is a full stack web application built with Python and Django that allows
 
 ## Getting Started
 
-- Install python 3.10
-- Set up a virtual environment in the root of the cloned project folder -> terminal command -> python -m venv venv
+- Install python 3.10 (required)
+- Set up a virtual environment in the root of the cloned project folder -> terminal (powershell or git bash) command -> python -m venv venv
 - Install all dependencies (using the pip install -r requirements.txt command).
   
-- Set up a postgres or sqlite database.  If a postgres database is being used, make sure to populate the secrets in a .env file ->
+- Set up a postgres or sqlite database.  If a postgres database is being used, make sure to populate the following secrets in a .env file ->
   SECRET_KEY=
   DATABASE_NAME=
   DATABASE_USER=
