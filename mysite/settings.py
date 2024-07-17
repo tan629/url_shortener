@@ -31,7 +31,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -93,7 +93,7 @@ DATABASES = {
 
         'PASSWORD': env('DATABASE_PASS'),
 
-        'HOST': 'localhost',
+        'HOST': 'postgres_db',
 
         'PORT': '5432'
 
