@@ -16,10 +16,10 @@ TinyApp is a full stack web application built with Python and Django that allows
 - Clone the repo to your machine
 - In the root folder of the cloned repo, create an .env file with the following template :
   
-  SECRET_KEY=<secret_key> <br/>
-  DATABASE_NAME=<database_name> <br/>
-  DATABASE_USER=<username> <br/>
-  DATABASE_PASS=<password> <br/>
+  SECRET_KEY= <br/>
+  DATABASE_NAME= <br/>
+  DATABASE_USER= <br/>
+  DATABASE_PASS= <br/>
   HOST=postgres_db
 
 - Fill out the blank spaces according to your choice in the .env file above
