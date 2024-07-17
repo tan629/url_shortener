@@ -2,14 +2,6 @@
 
 TinyApp is a full stack web application built with Python and Django that allows users to shorten long URLs (à la bit.ly).
 
-# Link to Deployed App
-
-[Link to TinyApp](http://tan629.pythonanywhere.com/)
-
-## Dependencies
-- crispy-forms
-- add all dependencies here
-
 ## Running it using Docker
 
 - Install and **run** Docker in your local machine to start the docker engine
