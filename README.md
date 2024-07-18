@@ -5,9 +5,9 @@ TinyApp is a full stack web application built with Python and Django that allows
 ## Running the app using Docker
 
 - Install and **run** Docker in your local machine to start the docker engine
-- 
+
 - Clone the repo to your machine (Make sure git config `core.autocrlf = false` before cloning --> set in command line --> `git config --global core.autocrlf false`)
-- 
+  
 - In the root folder of the cloned repo, create an .env file with the following template :
   
   SECRET_KEY= <br/>
