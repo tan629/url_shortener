@@ -19,8 +19,7 @@
       </div>  
       <div class="card-body">
         <div class="text-center">
-          <h5 class="card-title">TinyURL for: {{ url.long_url }}</h5>
-          <p class="card-text">Short URL: <a href="{% url 'redirect-short-url' url.short_url %}">{{ url.short_url }}</a></p>
+          <h4 class="card-text">Short URL: <a href="{% url 'redirect-short-url' url.short_url %}">{{ url.short_url }}</a></h4>
         </div>
       </div>
       <div class="card-footer text-muted">
