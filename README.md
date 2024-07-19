@@ -16,7 +16,7 @@ TinyApp is a full stack web application built with Python and Django that allows
   DATABASE_PASS= <br/>
   HOST=postgres_db
 
-- Fill out the blank spaces according to your choice in the .env file above. **Note :** Keep the HOST name as is - this is because <br/>
+- Fill out the blank spaces according to your choice in the .env file above. **Note :** Keep the HOST name as is - this is because
   this name of the database host is already assigned in the docket-compose setup.
   
 - Open git bash in the root folder of the project
