@@ -8,7 +8,7 @@ TinyApp is a full stack web application built with Python and Django that allows
 
 - Clone the repo to your machine (Make sure git config `core.autocrlf = false` before cloning --> set in command line --> `git config --global core.autocrlf false`)
   
-- In the root folder of the cloned repo, create an .env file with the following template :
+- In the root folder of the cloned repo, create an **.env** file with the following template :
   
   SECRET_KEY= <br/>
   DATABASE_NAME= <br/>
@@ -16,7 +16,7 @@ TinyApp is a full stack web application built with Python and Django that allows
   DATABASE_PASS= <br/>
   HOST=postgres_db
 
-- Fill out the blank spaces according to your choice in the .env file above. **Note :** Keep the HOST name as is - this is because
+- Fill out the blank spaces according to your choice in the **.env** file above. **Note :** Keep the HOST name as is - this is because
   this name of the database host is already assigned in the docket-compose setup.
   
 - Open git bash in the root folder of the project
